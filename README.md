@@ -224,38 +224,28 @@ Celebrating the couple's silver wedding anniversary.
 
 <table>
 <tr>
-    <th> &nbsp; </th>
     <th> Name </th>
     <th> Role </th>
 </tr>
 <tr>
-    <td><img src="final oop/static/Claire.JPG" width="100" height="100"> </td>
     <td><strong>Aguado, Claire M. </strong> <br/>
-    <td>Project Leader/System Architect</td>
+    <td>Project Leader</td>
 </tr>
   <tr>
-    <td><img src="static/marieemoiselle.JPG" width="100" height="100"> </td>
     <td><strong>Anuran, Prince Jonnell M. </strong> <br/>
-    <td>Feature Developer</td>
+    <td>System Developer</td>
 </tr>
 <tr>
-    <td><img src="static/jeisquared.jpg" width="100" height="100"> </td>
     <td><strong>Hibaler, khyl Jaspher </strong> <br/>
     </td>
-    <td>Feature Developer</td>
+    <td>System Developer</td>
 </tr>
 <tr>
-    <td><img src="static/renzmarrion.jpg" width="100" height="100"> </td>
-    <td><strong>Mendoza, Kayzel Marie B.</strong> <br/>
+   <td><strong>Mendoza, Kayzel Marie B.</strong> <br/>
     </td>
-    <td>Project Leader/System Architect</td>
+    <td>Project Leader</td>
 </tr>
 </table>
 
 ##  ‧₊˚ ┊ Acknowledgment
 We sincerely express our gratitude to our instructor for the guidance and support provided throughout the completion of this project. We also extend our appreciation to our classmates and peers for their cooperation and encouragement during the development process.
-
----
-<small>
-<b>DISCLAIMER</b><br/>
-This project and its contents are provided for example and learning purposes only. Students are encouraged to use it as a reference and not copy it in its entirety.</small>
