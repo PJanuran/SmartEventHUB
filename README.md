@@ -8,72 +8,129 @@ Hibaler, khyl Jaspher <br/>
 Mendoza, Kayzel Marie B.
 </p>
 
-## ‧₊˚ ┊ Overview
+### Overview
 Eventplanner is a console-based Java application allowing users to manage Event plans entries directly through the terminal.
 <br/><br/>
 The development of the SmartEvent Hub: Event Management and Analytics System applies several key Object-Oriented Programming (OOP) concepts to ensure the platform is organized, scalable, and easy to maintain. Encapsulation is implemented by grouping related functions—such as data handling, user interface elements, and database operations—into specific classes that hide internal processes while exposing only necessary methods. Inheritance is used to streamline the creation of different windows and features by allowing new frames or pages to reuse and extend the structure of a base Tkinter class, reducing repetitive code. Polymorphism is also present, particularly in how shared methods like button commands and display functions behave differently depending on which page or event type (Birthday, Anniversary, Burial) is being processed. Finally, Abstraction helps simplify complex processes, such as generating analytics or querying the database, by placing them into reusable methods that shield the programmer from low-level implementation details. Together, these OOP principles make the system more efficient, modular, and easier to update as new features are added.
 
 <br/>
-### Users can:
+Users can:
+
 ✏️ Add a new event<br/>
 📔 View all event<br/>
 ✍🏻 Update event<br/>
 📑 Delete event<br/>
 📑 Generate the reciept
 
-### Event plan is stored 
+
 💾 All Event are stored in the event file
 
-## ‧₊˚ ┊ Project Structure
+### Project Structure
 ```
-📂 src/
-└── 📂 diaryapp/
-    ├── ☕ Main.java          
-    ├── ☕ Diary.java
-    └── ☕ FileHandler.java
+event planner/
+│
+└── src/
+     │
+     └── final project.java
+
 ```
-- `Main.java` - Entry point of the program, containing the menu and handles user interactions.
-- `Diary.java` - Handles the diary operations (CRUD)
-- `FileHandler.java` - Handles file creation, reading, writing, and appending.
+- `final project.java` -all the code handling, CRUD and etc.
+
+
 ### How to Run the Program
-Open your terminal in the `src/` folder and run:
+Open a terminal or command prompt, navigate to the folder where the .java files are located, and run:
 ```
-javac diaryapp/*.java
+javac event planner*.java
 ```
 Run the program using:
 ```
-java diaryapp.Main
+java event planner.Main
 ```
-## ‧₊˚ ┊ Features
+Features
 1. **Add Event.** Create a new Event being planned.
 2. **View Event.** Display all saved Event, show the name of the clients.
 3. **Update Event.** update the reservation, name of client, location, time, the bundle bieng purchased.
 4. **Delete Event.** Remove a specific event permanently.
 5. **Generates reciept.** show the planned event.
 
-## ‧₊˚ ┊ Object-oriented Principles
-### 💊 Encapsulation
-Encapsulation was applied through class design and private fields. For instance, in `Diary`, the `filepath` variable is private and can only be accessed through the class's own methods such as, `addEntry()`, `viewEntries()`, etc.
+### Object-oriented Principles
+Object-oriented Principles
+Encapsulation
 
-This ensures that data and operations on it are bundled together and protected from unauthorized modification.
+Encapsulation was applied through the use of classes with private fields.
+In the program, the ```Event``` class contains private variables such as:
+```
+id
 
-### 💡 Abstraction
-Abstraction was implemented when the `FileHandler` class abstracts file operations like reading, writing, and appending. The `Diary` class doesn't need to know how file handling works, for it just calls methods like `FileHandler.appendLine()` or `FileHandler.readAllLines()`.
+title
 
-This hides low-level complexity and keeps the main logic clean.
+date
 
-### 🧬 Inheritance
-Inheritance was not heavily used in the program, however, its structure is ready for extension.
-For instance, if a subclass like for diary is to be created, it could inherit from `Diary` and override some methods like `addEntry()` and `viewEntries()`.
+time
 
-This shows potential for code reuse and expansion without rewriting existing logic.
+location
 
-### 🎭 Polymorphism
-The `switch` expression in `Main.java` demonstrates method-level polymorphism, the same action (`diary.[action]`) calls different behaviors depending on user choice.
+category
 
-Also, if a subclass of `Diary` overrides a method, for instance `addEntry()`, the program could dynamically call the correct version at runtime, enabling flexible behavior.
+inclusion
 
-## ‧₊˚ ┊ Example Output
+description
+```
+
+These fields can only be accessed or modified through the class's public getters and setters, such as ```getTitle()```, ```setDate()```, and ```getDescription()```.
+
+This ensures that each event’s data is protected from unauthorized modification, and all updates happen only through controlled methods inside the class.
+
+### Abstraction
+
+Abstraction was implemented by dividing the program into clear, simplified methods that hide complex processes.
+For example, methods such as:
+```
+addEvent()
+
+updateEvent()
+
+deleteEvent()
+
+viewAllEvents()
+
+generateReceipt()
+```
+Each method hides the detailed steps needed to perform its task.
+The main program does not need to know how an event is stored, updated, or formatted—it simply calls the method.
+
+This removes low-level complexity and keeps the program’s logic clean and easy to maintain.
+
+### Inheritance
+
+Inheritance was not used directly in this program.
+There is only one main class (```EventOrganizerConsole```) and a nested ```Event``` class.
+However, the structure is ready for extension.
+For example, different event types such as:
+```
+BirthdayEvent
+
+AnniversaryEvent
+
+BurialEvent
+```
+could inherit from the base Event class and override certain behaviors like toString() or how inclusions are handled.
+This shows potential for code reuse and expansion without rewriting the existing logic.
+
+### Polymorphism
+
+Polymorphism is applied in the program through method overriding.
+The ```Event``` class overrides the inherited ```toString()``` method:
+
+```@Override
+public String toString() { ... }
+```
+This allows each event object to provide its own customized string format when displayed.
+Additionally, if subclasses of Event were added in the future (e.g., ```BirthdayEvent```, ```BurialEvent```), they could override certain methods like ```toString()``` or ```calculateCost()```.
+This would let the program call the correct version dynamically at runtime.
+This demonstrates how polymorphism allows flexible behavior while using the same method names.
+
+### Example Output
 ```
 --------------------------------------------------
   EVENT ORGANIZER MENU
@@ -205,7 +262,7 @@ Celebrating the couple's silver wedding anniversary.
 
 ```
 
-##  ‧₊˚ ┊ notes.txt Snippet
+All Scheduled Events.txt Snippet
 ```
 ================================================================================
 --- ALL SCHEDULED EVENTS ---
@@ -220,7 +277,7 @@ Celebrating the couple's silver wedding anniversary.
 
 ```
 
-##  ‧₊˚ ┊ Contributors
+Contributors
 
 <table>
 <tr>
@@ -247,5 +304,5 @@ Celebrating the couple's silver wedding anniversary.
 </tr>
 </table>
 
-##  ‧₊˚ ┊ Acknowledgment
+### Acknowledgment
 We sincerely express our gratitude to our instructor for the guidance and support provided throughout the completion of this project. We also extend our appreciation to our classmates and peers for their cooperation and encouragement during the development process.
