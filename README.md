@@ -293,7 +293,7 @@ Contributors
     <td>System Developer</td>
 </tr>
 <tr>
-    <td><strong>Hibaler, khyl Jaspher </strong> <br/>
+    <td><strong>Hibaler, Jaspher Khyl </strong> <br/>
     </td>
     <td>System Developer</td>
 </tr>
