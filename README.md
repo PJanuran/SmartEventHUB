@@ -132,6 +132,8 @@ This demonstrates how polymorphism allows flexible behavior while using the same
 
 ### Example Output
 ```
+Welcome to HEBS Event Organizer (Java Console Edition)
+
 --------------------------------------------------
   EVENT ORGANIZER MENU
 --------------------------------------------------
@@ -182,10 +184,10 @@ Enter the ID of the event to update (or 0 to cancel): 2
 
 Editing Event ID 2: '25th Wedding Milestone'
 Leave fields blank to keep the current value.
-1. Reservation Name (Current: 25th Wedding Milestone): Prince
+1. Reservation Name (Current: 25th Wedding Milestone): PRINCE
 2. Date (YYYY-MM-DD, Current: 2025-05-15): 2025-12-25
 3. Time (HH:MM, Required. Current: 18:00): 12:00
-4. Location (Required. Current: Grand Ballroom): Matinggain
+4. Location (Required. Current: Grand Ballroom): MATINGGAIN
 
 5. Choose Category:
    [1] Birthday
@@ -193,31 +195,38 @@ Leave fields blank to keep the current value.
    [3] Burial
    Enter category number (Default: 2 - Anniversary): 2
 
-6. Choose Inclusions (Select up to 10 items):
-------------------------------
-   [X] [1] Catering Service
-   [ ] [2] Live Band / DJ
-   [ ] [3] Security Personnel
-   [ ] [4] Floral Arrangements
-   [X] [5] Photography Package
-   [ ] [6] Videography Service
-   [ ] [7] Venue Decoration
-   [ ] [8] Transportation (Limo/Hearse)
-   [ ] [9] Custom Cake / Dessert Bar
-   [ ] [10] Event Planner Fee
-------------------------------
-   CURRENT: Catering Service, Photography Package
+6. Choose Inclusions for ANNIVERSARY (Select up to 10 items):
+--------------------------------------------------
+  --- VENUE ---
+   [X] [ 1] PRIVATE ROOM
+   [ ] [ 2] EVENT SPACE
+  --- ENTERTAINMENT ---
+   [ ] [ 3] DJ
+   [ ] [ 4] LIVE BAND
+   [ ] [ 5] GAMES
+   [ ] [ 6] ACTIVITIES
+  --- FOOD AND BEVERAGE ---
+   [ ] [ 7] BUFFET
+   [X] [ 8] PLATED MEAL
+  --- PHOTOGRAPHY ---
+   [ ] [ 9] PROFESSIONAL PHOTOGRAPHER
+   [ ] [10] PHOTO BOOTH
+  --- ADD-ONS ---
+   [ ] [11] PRE - ANNIVERSARY SHOOT
+   [X] [12] PROGRAM HOST
+  --- DECORATIONS AND THEME ---
+   [X] [13] BALLOONS
+   [ ] [14] BANNERS
+   [ ] [15] THEMED DECOR
+   [ ] [16] INVITATIONS
+   [ ] [17] SOUVENIR
+--------------------------------------------------
+   CURRENT SELECTIONS (4/10): PRIVATE ROOM, PLATED MEAL, BALLOONS, PROGRAM HOST
    Enter numbers to toggle (e.g., '1 5 10'), or 'D' when Done:
-> 1
-[INFO] Removed: Catering Service
-   [Current selections: Photography Package]
 > 2
-[INFO] Added: Live Band / DJ
-   [Current selections: Photography Package, Live Band / DJ]
-> 3
-[INFO] Added: Security Personnel
-   [Current selections: Photography Package, Live Band / DJ, Security Personnel]
-> d
+[INFO] Added: EVENT SPACE
+   [Current selections (5/10): PRIVATE ROOM, PLATED MEAL, BALLOONS, PROGRAM HOST, EVENT SPACE]
+> D
 7. Description (Current: Celebrating the couple's silver wedding anniversary.): 
 Enter new description (or just press Enter to keep current):
 > 
@@ -244,22 +253,41 @@ Enter the ID of the event to generate a receipt for (or 0 to cancel): 2
           HEBS EVENT BOOKING RECEIPT
 ************************************************************
 Event ID       : 2
-Reservation    : Prince
+Reservation    : PRINCE
 Category       : Anniversary
 ------------------------------------------------------------
 Date           : 2025-12-25
 Time           : 12:00
-Location       : Matinggain
+Location       : MATINGGAIN
 ------------------------------------------------------------
-INCLUDED SERVICES (Inclusion):
-  - ( 1) Photography Package
-  - ( 2) Live Band / DJ
-  - ( 3) Security Personnel
+INCLUDED SERVICES (5/10 Selected):
+  [-- VENUE --]
+    - PRIVATE ROOM
+    - EVENT SPACE
+  [-- FOOD AND BEVERAGE --]
+    - PLATED MEAL
+  [-- ADD-ONS --]
+    - PROGRAM HOST
+  [-- DECORATIONS AND THEME --]
+    - BALLOONS
 ------------------------------------------------------------
 Description:
 Celebrating the couple's silver wedding anniversary.
 ************************************************************
 
+--------------------------------------------------
+  EVENT ORGANIZER MENU
+--------------------------------------------------
+1. Add New Event
+2. View All Events
+3. Update Event
+4. Delete Event
+5. Generate Receipt
+6. Exit
+--------------------------------------------------
+Enter your choice (1-6): 6
+
+Thank you for using the Event Organizer. Goodbye!
 ```
 
 All Scheduled Events.txt Snippet
