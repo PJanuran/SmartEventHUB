@@ -5,34 +5,53 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
 
-/**
- * EventOrganizerConsole Class: Handles application logic and console I/O.
- * This class simulates the persistence layer using an ArrayList.
- * It contains the main method for execution.
- */
 public class EventOrganizerConsole {
-    // CATEGORIES have been limited to the requested three: Birthday, Anniversary, Burial
+    
     private static final String[] CATEGORIES = {
         "Birthday", "Anniversary", "Burial"
     };
 
-    // List of 10 available inclusions to choose from
-    private static final String[] INCLUSIONS = {
-        "Catering Service", "Live Band / DJ", "Security Personnel", "Floral Arrangements",
-        "Photography Package", "Videography Service", "Venue Decoration", "Transportation (Limo/Hearse)",
-        "Custom Cake / Dessert Bar", "Event Planner Fee"
-    };
+    private static final Map<String, Map<String, List<String>>> CATEGORY_INCLUSIONS = createInclusionsMap();
+
+    private static Map<String, Map<String, List<String>>> createInclusionsMap() {
+        Map<String, Map<String, List<String>>> map = new HashMap<>();
+
+        Map<String, List<String>> birthday = new HashMap<>();
+        birthday.put("VENUE", Arrays.asList("PRIVATE ROOM", "EVENT SPACE"));
+        birthday.put("FOOD AND BEVERAGE", Arrays.asList("BUFFET", "PLATED MEAL"));
+        birthday.put("DECORATIONS AND THEME", Arrays.asList("BALLOONS", "BANNERS", "THEMED DECOR", "INVITATIONS", "SOUVENIR"));
+        birthday.put("ENTERTAINMENT", Arrays.asList("DJ", "LIVE BAND", "GAMES", "ACTIVITIES"));
+        birthday.put("PHOTOGRAPHY", Arrays.asList("PROFESSIONAL PHOTOGRAPHER", "PHOTO BOOTH"));
+        birthday.put("ADD-ONS", Arrays.asList("PRE - BIRTHDAY SHOOT", "PROGRAM HOST"));
+        map.put("Birthday", birthday);
+
+        Map<String, List<String>> anniversary = new HashMap<>();
+        anniversary.put("VENUE", Arrays.asList("PRIVATE ROOM", "EVENT SPACE"));
+        anniversary.put("FOOD AND BEVERAGE", Arrays.asList("BUFFET", "PLATED MEAL"));
+        anniversary.put("DECORATIONS AND THEME", Arrays.asList("BALLOONS", "BANNERS", "THEMED DECOR", "INVITATIONS", "SOUVENIR"));
+        anniversary.put("ENTERTAINMENT", Arrays.asList("DJ", "LIVE BAND", "GAMES", "ACTIVITIES"));
+        anniversary.put("PHOTOGRAPHY", Arrays.asList("PROFESSIONAL PHOTOGRAPHER", "PHOTO BOOTH"));
+        anniversary.put("ADD-ONS", Arrays.asList("PRE - ANNIVERSARY SHOOT", "PROGRAM HOST"));
+        map.put("Anniversary", anniversary);
+        
+        Map<String, List<String>> burial = new HashMap<>();
+        burial.put("VENUE", Arrays.asList("HOME", "CEMETERY"));
+        burial.put("CASKET", Arrays.asList("KIDS", "SMALL", "MEDIUM", "LARGE", "X - LARGE", "2X - LARGE"));
+        burial.put("TRANSPORTATION", Arrays.asList("HEARSE", "LIMOUSINE"));
+        burial.put("FLORAL ARRANGEMENTS", Arrays.asList("FUNERAL FLOWERS", "WREATH"));
+        map.put("Burial", burial);
+
+        return map;
+    }
 
     private final List<Event> events;
     private final Scanner scanner;
-    // Used to simulate the database's AUTOINCREMENT feature
     private final AtomicInteger idCounter = new AtomicInteger(1); 
 
-    /**
-     * Private Inner Class: Data model for an individual event.
-     * Making it private static eliminates external access and startup ambiguity.
-     */
     private static class Event {
         private int id;
         private String title;
@@ -40,7 +59,7 @@ public class EventOrganizerConsole {
         private String time;
         private String location;
         private String category;
-        private List<String> inclusion; // Changed from String to List<String>
+        private List<String> inclusion;
         private String description;
 
         public Event(int id, String title, String date, String time, String location, String category, List<String> inclusion, String description) {
@@ -54,7 +73,6 @@ public class EventOrganizerConsole {
             this.description = description;
         }
 
-        // Getters and Setters
         public int getId() { return id; }
         public String getTitle() { return title; }
         public String getDate() { return date; }
@@ -74,7 +92,6 @@ public class EventOrganizerConsole {
 
         @Override
         public String toString() {
-            // Ensuring title fits in 25 characters for table formatting
             String shortTitle = title.length() > 25 ? title.substring(0, 22) + "..." : title;
             String displayTime = time.isEmpty() ? "" : time;
             String displayLocation = location.isEmpty() ? "" : location;
@@ -95,15 +112,17 @@ public class EventOrganizerConsole {
     public EventOrganizerConsole() {
         this.events = new ArrayList<>();
         this.scanner = new Scanner(System.in);
-        // Add sample data using the new, restricted categories and the new 'inclusion' field (now a List)
-        events.add(new Event(idCounter.getAndIncrement(), "Alice's 30th Party", "2024-11-20", "19:00", "The Loft Venue", "Birthday", Arrays.asList(INCLUSIONS[0], INCLUSIONS[8]), "Celebration for Alice's 30th birthday."));
-        events.add(new Event(idCounter.getAndIncrement(), "25th Wedding Milestone", "2025-05-15", "18:00", "Grand Ballroom", "Anniversary", Arrays.asList(INCLUSIONS[0], INCLUSIONS[4]), "Celebrating the couple's silver wedding anniversary."));
-        events.add(new Event(idCounter.getAndIncrement(), "John Doe Service", "2024-12-24", "10:30", "Pine Hill Chapel", "Burial", Arrays.asList(INCLUSIONS[3], INCLUSIONS[7]), "Memorial service for the late John Doe."));
+        
+        List<String> bdayInclusions = Arrays.asList("EVENT SPACE", "BUFFET", "DJ", "PROFESSIONAL PHOTOGRAPHER");
+        events.add(new Event(idCounter.getAndIncrement(), "Alice's 30th Party", "2024-11-20", "19:00", "The Loft Venue", "Birthday", bdayInclusions, "Celebration for Alice's 30th birthday."));
+        
+        List<String> anniInclusions = Arrays.asList("PRIVATE ROOM", "PLATED MEAL", "BALLOONS", "PROGRAM HOST");
+        events.add(new Event(idCounter.getAndIncrement(), "25th Wedding Milestone", "2025-05-15", "18:00", "Grand Ballroom", "Anniversary", anniInclusions, "Celebrating the couple's silver wedding anniversary."));
+        
+        List<String> burialInclusions = Arrays.asList("HOME", "LARGE", "HEARSE", "FUNERAL FLOWERS");
+        events.add(new Event(idCounter.getAndIncrement(), "John Doe Service", "2024-12-24", "10:30", "Pine Hill Chapel", "Burial", burialInclusions, "Memorial service for the late John Doe."));
     }
 
-    /**
-     * Main application loop.
-     */
     public void run() {
         boolean running = true;
         System.out.println("Welcome to HEBS Event Organizer (Java Console Edition)");
@@ -126,9 +145,9 @@ public class EventOrganizerConsole {
                     deleteEvent();
                     break;
                 case "5":
-                    generateReceipt(); // New function
+                    generateReceipt();
                     break;
-                case "6": // Exit is now option 6
+                case "6":
                     running = false;
                     System.out.println("\nThank you for using the Event Organizer. Goodbye!");
                     break;
@@ -140,22 +159,13 @@ public class EventOrganizerConsole {
         scanner.close();
     }
 
-    /**
-     * Checks if any event is already scheduled for the given date.
-     * @param date The date to check (YYYY-MM-DD).
-     * @param excludeId Event ID to exclude from the check (used during update). Use 0 for new events.
-     * @return true if the date is booked by another event, false otherwise.
-     */
     private boolean isDateBooked(String date, int excludeId) {
         return events.stream()
-                .filter(e -> e.getId() != excludeId) // Exclude the current event when updating
+                .filter(e -> e.getId() != excludeId)
                 .anyMatch(e -> e.getDate().equals(date));
     }
 
 
-    /**
-     * Displays the main menu options.
-     */
     private void displayMenu() {
         System.out.println("\n" + "-".repeat(50));
         System.out.println("  EVENT ORGANIZER MENU");
@@ -164,14 +174,11 @@ public class EventOrganizerConsole {
         System.out.println("2. View All Events");
         System.out.println("3. Update Event");
         System.out.println("4. Delete Event");
-        System.out.println("5. Generate Receipt"); // New option
-        System.out.println("6. Exit");             // Moved
+        System.out.println("5. Generate Receipt");
+        System.out.println("6. Exit");
         System.out.println("-".repeat(50));
     }
 
-    /**
-     * Gathers data for a new event and adds it to the list.
-     */
     private void addEvent() {
         System.out.println("\n" + "=".repeat(50));
         System.out.println("--- ADD NEW EVENT ---");
@@ -179,7 +186,6 @@ public class EventOrganizerConsole {
         String title, date, time, location, category, description;
         List<String> inclusion;
 
-        // 1. Input validation for Title (Required)
         System.out.print("1. Enter Reservation Name (Required): ");
         title = scanner.nextLine().trim();
         while (title.isEmpty()) {
@@ -187,7 +193,6 @@ public class EventOrganizerConsole {
             title = scanner.nextLine().trim();
         }
 
-        // 2. Input validation for Date (Required + Double Booking Check)
         System.out.print("2. Enter Date (YYYY-MM-DD, Required): ");
         date = scanner.nextLine().trim();
         while (date.isEmpty() || isDateBooked(date, 0)) {
@@ -199,7 +204,6 @@ public class EventOrganizerConsole {
             date = scanner.nextLine().trim();
         }
 
-        // 3. Input validation for Time (Required)
         System.out.print("3. Enter Time (HH:MM, Required): ");
         time = scanner.nextLine().trim();
         while (time.isEmpty()) {
@@ -207,7 +211,6 @@ public class EventOrganizerConsole {
             time = scanner.nextLine().trim();
         }
 
-        // 4. Input validation for Location (Required)
         System.out.print("4. Enter Location (Required): ");
         location = scanner.nextLine().trim();
         while (location.isEmpty()) {
@@ -215,13 +218,10 @@ public class EventOrganizerConsole {
             location = scanner.nextLine().trim();
         }
 
-        // 5. Category Selection
         category = getCategoryChoice(null);
         
-        // 6. Inclusion Selection (Now multi-choice)
-        inclusion = getInclusionChoices(new ArrayList<>());
+        inclusion = getInclusionChoices(category, new ArrayList<>());
         
-        // 7. Description (Optional)
         System.out.println("7. Enter Description (Optional). Press Enter to skip.");
         System.out.print("> ");
         description = scanner.nextLine().trim();
@@ -233,16 +233,12 @@ public class EventOrganizerConsole {
         System.out.println("\n[SUCCESS] Event added successfully with ID: " + newId);
     }
     
-    /**
-     * Helper method to handle category selection.
-     */
     private String getCategoryChoice(String currentCategory) {
         System.out.println("\n5. Choose Category:");
         for (int i = 0; i < CATEGORIES.length; i++) {
             System.out.printf("   [%d] %s\n", i + 1, CATEGORIES[i]);
         }
         
-        // Determine the default category index for display/empty input
         int defaultIndex = 0;
         if (currentCategory != null) {
             for (int i = 0; i < CATEGORIES.length; i++) {
@@ -265,32 +261,43 @@ public class EventOrganizerConsole {
             if (index >= 0 && index < CATEGORIES.length) {
                 return CATEGORIES[index];
             } else {
-                // If number is out of range
                 System.out.println("[INFO] Invalid category number. Using default category.");
                 return CATEGORIES[defaultIndex];
             }
         } catch (NumberFormatException e) {
-            // If input is not a number
             System.out.println("[INFO] Invalid input (not a number). Using default category.");
             return CATEGORIES[defaultIndex];
         }
     }
     
-    /**
-     * Helper method to handle multi-selection of inclusions.
-     */
-    private List<String> getInclusionChoices(List<String> currentInclusions) {
+    private List<String> getInclusionChoices(String category, List<String> currentInclusions) {
         List<String> selected = new ArrayList<>(currentInclusions);
-        String currentList = selected.isEmpty() ? "None" : String.join(", ", selected);
+        Map<String, List<String>> categoryOptions = CATEGORY_INCLUSIONS.get(category);
         
-        System.out.println("\n6. Choose Inclusions (Select up to 10 items):");
-        System.out.println("-".repeat(30));
-        for (int i = 0; i < INCLUSIONS.length; i++) {
-            String status = selected.contains(INCLUSIONS[i]) ? "[X]" : "[ ]";
-            System.out.printf("   %s [%d] %s\n", status, i + 1, INCLUSIONS[i]);
+        if (categoryOptions == null || categoryOptions.isEmpty()) {
+            System.out.println("[INFO] No specific inclusions defined for category: " + category);
+            return Collections.emptyList();
         }
-        System.out.println("-".repeat(30));
-        System.out.printf("   CURRENT: %s\n", currentList);
+
+        Map<Integer, String> inclusionIndexMap = new HashMap<>();
+        int index = 1;
+
+        System.out.printf("\n6. Choose Inclusions for %s (Select up to 10 items):\n", category.toUpperCase());
+        System.out.println("-".repeat(50));
+        
+        for (Map.Entry<String, List<String>> groupEntry : categoryOptions.entrySet()) {
+            System.out.printf("  --- %s ---\n", groupEntry.getKey());
+            for (String item : groupEntry.getValue()) {
+                String status = selected.contains(item) ? "[X]" : "[ ]";
+                System.out.printf("   %s [%2d] %s\n", status, index, item);
+                inclusionIndexMap.put(index, item);
+                index++;
+            }
+        }
+        System.out.println("-".repeat(50));
+
+        String currentList = selected.isEmpty() ? "None" : String.join(", ", selected);
+        System.out.printf("   CURRENT SELECTIONS (%d/%d): %s\n", selected.size(), 10, currentList);
         System.out.println("   Enter numbers to toggle (e.g., '1 5 10'), or 'D' when Done:");
         
         while (true) {
@@ -299,7 +306,7 @@ public class EventOrganizerConsole {
 
             if (input.equals("D") || input.isEmpty()) {
                 if (selected.isEmpty()) {
-                    System.out.println("[ERROR] You must select at least one inclusion. Enter selection numbers or 'D' to finish if you have selections.");
+                    System.out.println("[ERROR] You must select at least one inclusion to proceed. Enter selection numbers or 'D' to finish if you have selections.");
                     continue;
                 }
                 break;
@@ -308,9 +315,11 @@ public class EventOrganizerConsole {
             try {
                 String[] parts = input.split("\\s+");
                 for (String part : parts) {
-                    int index = Integer.parseInt(part) - 1;
-                    if (index >= 0 && index < INCLUSIONS.length) {
-                        String item = INCLUSIONS[index];
+                    if (part.isEmpty()) continue;
+                    int selectedIndex = Integer.parseInt(part);
+                    String item = inclusionIndexMap.get(selectedIndex);
+
+                    if (item != null) {
                         if (selected.contains(item)) {
                             selected.remove(item);
                             System.out.printf("[INFO] Removed: %s\n", item);
@@ -321,13 +330,12 @@ public class EventOrganizerConsole {
                             System.out.println("[INFO] Maximum 10 inclusions reached. Cannot add: " + item);
                         }
                     } else {
-                        System.out.println("[INFO] Invalid number: " + part + ". Please enter a number between 1 and " + INCLUSIONS.length + ".");
+                        System.out.println("[INFO] Invalid number: " + part + ". Please enter a number between 1 and " + (index - 1) + ".");
                     }
                 }
                 
-                // Re-display current status
                 currentList = selected.isEmpty() ? "None" : String.join(", ", selected);
-                System.out.printf("   [Current selections: %s]\n", currentList);
+                System.out.printf("   [Current selections (%d/10): %s]\n", selected.size(), currentList);
 
             } catch (NumberFormatException e) {
                 System.out.println("[ERROR] Invalid input. Please enter numbers separated by spaces or 'D'.");
@@ -336,11 +344,7 @@ public class EventOrganizerConsole {
         return selected;
     }
 
-    /**
-     * Displays all scheduled events in a formatted table, sorted by date and time.
-     */
     private void viewEvents() {
-        // Sort events by date, then by time
         events.sort((e1, e2) -> {
             int dateCompare = e1.getDate().compareTo(e2.getDate());
             if (dateCompare != 0) return dateCompare;
@@ -357,23 +361,18 @@ public class EventOrganizerConsole {
             return;
         }
 
-        // Print header
         String header = String.format("| %-5s | %-25s | %-10s | %-5s | %-15s | %-15s |",
             "ID", "Reservation Name", "Date", "Time", "Location", "Category"
         );
         System.out.println(header);
         System.out.println("-".repeat(80));
 
-        // Print events
         for (Event event : events) {
             System.out.println(event);
         }
         System.out.println("=".repeat(80));
     }
 
-    /**
-     * Finds an event by its ID.
-     */
     private Event findEventById(int id) {
         return events.stream()
                 .filter(e -> e.getId() == id)
@@ -381,9 +380,6 @@ public class EventOrganizerConsole {
                 .orElse(null);
     }
     
-    /**
-     * Handles the process of getting a valid ID from the user.
-     */
     private int getValidEventId(String action) {
         System.out.print("Enter the ID of the event to " + action + " (or 0 to cancel): ");
         try {
@@ -393,13 +389,10 @@ public class EventOrganizerConsole {
             return id;
         } catch (NumberFormatException e) {
             System.out.println("[ERROR] Invalid input. Please enter a valid number for the ID.");
-            return -1; // Indicates an invalid input occurred
+            return -1;
         }
     }
 
-    /**
-     * Allows the user to update an existing event.
-     */
     private void updateEvent() {
         viewEvents();
         System.out.println("\n" + "=".repeat(50));
@@ -407,7 +400,7 @@ public class EventOrganizerConsole {
         
         int eventId = getValidEventId("update");
         if (eventId <= 0) {
-            if (eventId == 0) { // User explicitly cancelled
+            if (eventId == 0) {
                 System.out.println("[INFO] Update operation cancelled.");
             }
             return;
@@ -422,12 +415,10 @@ public class EventOrganizerConsole {
         System.out.println("\nEditing Event ID " + eventId + ": '" + eventToUpdate.getTitle() + "'");
         System.out.println("Leave fields blank to keep the current value.");
 
-        // 1. Title
         System.out.printf("1. Reservation Name (Current: %s): ", eventToUpdate.getTitle());
         String title = scanner.nextLine().trim();
         if (!title.isEmpty()) eventToUpdate.setTitle(title);
 
-        // 2. Date (Validation for Double Booking)
         String oldDate = eventToUpdate.getDate();
         boolean dateValid = false;
         
@@ -447,25 +438,22 @@ public class EventOrganizerConsole {
             }
         }
 
-        // 3. Time (Required)
         System.out.printf("3. Time (HH:MM, Required. Current: %s): ", eventToUpdate.getTime());
         String time = scanner.nextLine().trim();
         if (!time.isEmpty()) eventToUpdate.setTime(time);
         
-        // 4. Location (Required)
         System.out.printf("4. Location (Required. Current: %s): ", eventToUpdate.getLocation());
         String location = scanner.nextLine().trim();
         if (!location.isEmpty()) eventToUpdate.setLocation(location);
         
-        // 5. Category
-        String newCategory = getCategoryChoice(eventToUpdate.getCategory());
+        String oldCategory = eventToUpdate.getCategory();
+        String newCategory = getCategoryChoice(oldCategory);
         eventToUpdate.setCategory(newCategory);
         
-        // 6. Inclusion (Multi-Select)
-        List<String> newInclusion = getInclusionChoices(eventToUpdate.getInclusion());
+        List<String> startingInclusions = oldCategory.equals(newCategory) ? eventToUpdate.getInclusion() : new ArrayList<>();
+        List<String> newInclusion = getInclusionChoices(newCategory, startingInclusions);
         eventToUpdate.setInclusion(newInclusion);
 
-        // 7. Description
         String currentDescriptionDisplay = eventToUpdate.getDescription().isEmpty() ? "None" : eventToUpdate.getDescription().replaceAll("\n", " / ");
         System.out.printf("7. Description (Current: %s): ", currentDescriptionDisplay);
         System.out.println("\nEnter new description (or just press Enter to keep current):");
@@ -476,9 +464,6 @@ public class EventOrganizerConsole {
         System.out.println("\n[SUCCESS] Event ID " + eventId + " updated successfully.");
     }
 
-    /**
-     * Allows the user to delete an existing event.
-     */
     private void deleteEvent() {
         viewEvents();
         System.out.println("\n" + "=".repeat(50));
@@ -486,7 +471,7 @@ public class EventOrganizerConsole {
 
         int eventId = getValidEventId("delete");
         if (eventId <= 0) {
-            if (eventId == 0) { // User explicitly cancelled
+            if (eventId == 0) {
                 System.out.println("[INFO] Deletion operation cancelled.");
             }
             return;
@@ -505,7 +490,6 @@ public class EventOrganizerConsole {
             if (events.remove(eventToDelete)) {
                 System.out.println("\n[SUCCESS] Event ID " + eventId + " deleted.");
             } else {
-                // This branch should theoretically not be hit if findEventById worked
                 System.out.println("\n[ERROR] Failed to delete event ID " + eventId + ". Event may have been modified or already removed.");
             }
         } else {
@@ -513,9 +497,6 @@ public class EventOrganizerConsole {
         }
     }
     
-    /**
-     * Generates and displays a detailed receipt for a specific event.
-     */
     private void generateReceipt() {
         System.out.println("\n" + "=".repeat(60));
         System.out.println("--- GENERATE EVENT RECEIPT ---");
@@ -534,6 +515,8 @@ public class EventOrganizerConsole {
             return;
         }
 
+        Map<String, List<String>> categoryOptions = CATEGORY_INCLUSIONS.getOrDefault(event.getCategory(), Collections.emptyMap());
+
         System.out.println("\n" + "*".repeat(60));
         System.out.println("          HEBS EVENT BOOKING RECEIPT");
         System.out.println("*".repeat(60));
@@ -549,24 +532,31 @@ public class EventOrganizerConsole {
         System.out.printf("%-15s: %s\n", "Location", event.getLocation());
         
         System.out.println("-".repeat(60));
-        System.out.println("INCLUDED SERVICES (Inclusion):");
+        System.out.printf("INCLUDED SERVICES (%d/10 Selected):\n", event.getInclusion().size());
+        
         if (event.getInclusion().isEmpty()) {
             System.out.println("  None selected (required for booking).");
         } else {
-            for (int i = 0; i < event.getInclusion().size(); i++) {
-                System.out.printf("  - (%2d) %s\n", i + 1, event.getInclusion().get(i));
+            for (Map.Entry<String, List<String>> groupEntry : categoryOptions.entrySet()) {
+                List<String> selectedInGroup = groupEntry.getValue().stream()
+                        .filter(item -> event.getInclusion().contains(item))
+                        .collect(Collectors.toList());
+                
+                if (!selectedInGroup.isEmpty()) {
+                    System.out.printf("  [-- %s --]\n", groupEntry.getKey());
+                    selectedInGroup.forEach(item -> System.out.printf("    - %s\n", item));
+                }
             }
         }
         
         System.out.println("-".repeat(60));
         System.out.println("Description:");
         String descriptionText = event.getDescription().isEmpty() ? "  (No description provided)" : event.getDescription();
-        // Print description with simple word wrap
         String[] words = descriptionText.split(" ");
         StringBuilder wrappedText = new StringBuilder("  ");
-        int lineLength = 2; // Starts with '  ' padding
+        int lineLength = 2;
         for (String word : words) {
-            if (lineLength + word.length() + 1 > 58) { // Max width 60, minus padding
+            if (lineLength + word.length() + 1 > 58) {
                 wrappedText.append("\n  ").append(word).append(" ");
                 lineLength = 2 + word.length() + 1;
             } else {
@@ -580,9 +570,6 @@ public class EventOrganizerConsole {
     }
 
 
-    /**
-     * Main method: The entry point for the console application.
-     */
     public static void main(String[] args) {
         EventOrganizerConsole app = new EventOrganizerConsole();
         app.run();
