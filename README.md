@@ -132,7 +132,7 @@ This demonstrates how polymorphism allows flexible behavior while using the same
 
 ### Example Output
 ```
-Welcome to HEBS Event Organizer (Java Console Edition)
+Welcome to TREZ Event Organizer (Java Console Edition)
 
 --------------------------------------------------
   EVENT ORGANIZER MENU
@@ -250,7 +250,7 @@ Enter your choice (1-6): 5
 Enter the ID of the event to generate a receipt for (or 0 to cancel): 2
 
 ************************************************************
-          HEBS EVENT BOOKING RECEIPT
+          TREZ EVENT BOOKING RECEIPT
 ************************************************************
 Event ID       : 2
 Reservation    : PRINCE
